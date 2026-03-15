@@ -91,12 +91,28 @@ res://
 - **Comments:** Document WHY, not WHAT. Skip obvious comments. Document shader uniforms and their expected ranges.
 
 ## Current Phase
-**Phase 0: Foundation** (target: Week 1)
-- [ ] Project scaffold with folder structure
-- [ ] Player scene: CharacterBody3D, Camera3D, WASD + mouse look, walk/sprint, head bob
-- [ ] Test room: 6m×6m×3m CSGBox3D, OmniLight3D, one pedestal
-- [ ] Autoload stubs: SRSEngine, DecayManager, SaveManager, PalaceManager
-- [ ] RayCast3D + InteractionManager detecting pedestal collision
+**Phase 0: Foundation** — COMPLETE
+- [x] Project scaffold with folder structure
+- [x] Player scene: CharacterBody3D, Camera3D, WASD + mouse look, walk/sprint, head bob
+- [x] Test room: 6m×6m×3m CSGBox3D, OmniLight3D, one pedestal
+- [x] Autoload stubs: SRSEngine, DecayManager, SaveManager, PalaceManager
+- [x] RayCast3D + InteractionManager detecting pedestal collision
+
+**Phase 1: First Object + Review** — COMPLETE
+*Session 2: SRS Engine + SubViewport UI*
+- [x] SRSEngine: SM-2 algorithm with create_object(), review(), get_decay(), get_due_objects()
+- [x] Unit test scene (test/test_srs.tscn): 10 tests covering SM-2 logic — run to verify
+- [x] SubViewport panel prototype: tested — SubViewport text input had focus issues (push_input keyboard events not routed to TextEdit). Switched to CanvasLayer fallback per spec.
+- [x] CanvasLayer panel prototype: screen-space 512×384 panel, text input works, Esc closes
+- [x] InteractionManager: E-key opens panel at pedestal, Esc closes, player input disabled while panel open
+
+*Session 3: Procedural Objects + Interaction Polish*
+- [x] memory_object.tscn: procedural mesh (5 shapes) + Label3D with distance-based opacity fade
+- [x] creation_panel.tscn: CanvasLayer UI for creating memories (front/back/category/color)
+- [x] review_panel.tscn: CanvasLayer UI for reviewing (front → reveal → grade, keyboard shortcuts 1/2)
+- [x] Full interaction flow: E on empty pedestal → create, E on populated → review
+- [x] Label3D: billboard (FIXED_Y), distance-based opacity fade (3m–8m)
+- [x] Crosshair: dot default, ring on interactable (custom _draw() arc)
 
 ## Key Decisions Made
 | Decision | Choice | Rationale |
@@ -106,7 +122,7 @@ res://
 | Hallway generation | Pre-built straight connectors, fixed length | Procedural hallways with turns = scope creep. |
 | Object visuals | Abstract geometric (5 base meshes + category color) | No asset pipeline needed. Procedural and cohesive. |
 | Object labels | Label3D with distance-based opacity fade | Simpler than per-object SubViewport. Billboard mode. |
-| Review UI | In-world SubViewport panel (fallback: CanvasLayer HUD) | Try 3D panels first for immersion. Fall back if input quality is poor. |
+| Review UI | CanvasLayer HUD (SubViewport tested, failed — text input focus broken) | SubViewport push_input() doesn't route keyboard to TextEdit. CanvasLayer is reliable. |
 | Decay timing | Perceptual (proportional to interval progress) | Always shows meaningful decay, even for long-interval items. |
 | Audio | Godot built-in AudioStreamPlayer3D | No middleware. Sufficient for ambient + footsteps + UI. |
 | Fast travel | Minimap click → 0.5s fade → teleport | No pathfinding cutscene. Instant with brief transition. |

@@ -1,0 +1,74 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/review_panel.gd" id="1_review"]
+
+[node name="ReviewPanel" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_review")
+
+[node name="PanelUI" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -192.0
+offset_right = 256.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelUI"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="PanelUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Review"
+horizontal_alignment = 1
+
+[node name="FrontLabel" type="Label" parent="PanelUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="RevealButton" type="Button" parent="PanelUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Reveal (E)"
+
+[node name="BackLabel" type="Label" parent="PanelUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+visible = false
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="GradeContainer" type="HBoxContainer" parent="PanelUI/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="RememberedButton" type="Button" parent="PanelUI/MarginContainer/VBoxContainer/GradeContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 44)
+text = "Remembered (1)"
+
+[node name="ForgotButton" type="Button" parent="PanelUI/MarginContainer/VBoxContainer/GradeContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 44)
+text = "Forgot (2)"
