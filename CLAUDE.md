@@ -121,13 +121,13 @@ res://
 - [x] crack_overlay.png: procedural crack texture (256x256)
 - [x] DecayManager: full rewrite — timer-based shader/light/fog updates, room/object registration
 - [x] Restoration animation: tween decay→0 over 2.5s + gold GPUParticles3D burst
-- [x] SRSEngine: virtual time offset (get_time(), advance_debug_time()) for F9 accelerator
+- [x] SRSEngine: virtual time offset (get_time(), advance_debug_time()) for ` accelerator
 - [x] memory_object.gd: removed StandardMaterial3D, DecayManager applies ShaderMaterial
 - [x] interaction_manager.gd: registers objects with DecayManager, multi-pedestal support
-- [x] player.gd: F9 debug time toggle, HUD "TIME ACCEL" label
+- [x] player.gd: ` debug time toggle, HUD "TIME ACCEL" label
 - [x] test_room.tscn: 4 pedestals (was 1), FogVolume via DecayManager
 - [x] main.tscn: volumetric fog enabled, main.gd registers rooms with DecayManager
-- [x] project.godot: debug_time input action (F9)
+- [x] project.godot: debug_time input action (`)
 
 ## Key Decisions Made
 | Decision | Choice | Rationale |

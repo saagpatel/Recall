@@ -39,5 +39,5 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 210.0
 offset_bottom = 40.0
-text = "TIME ACCEL (F9)"
+text = "TIME ACCEL (`)"
 visible = false
