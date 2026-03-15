@@ -13,10 +13,11 @@ const HEAD_BOB_SPRINT_FREQ: float = 3.2
 @export var invert_y: bool = false
 
 @onready var camera: Camera3D = $Camera3D
-@onready var interaction_manager: Node3D = $Camera3D/InteractionManager
+@onready var interaction_manager: InteractionManager = $Camera3D/InteractionManager
 
 var _head_bob_time: float = 0.0
 var _camera_base_y: float = 0.0
+var input_disabled: bool = false
 
 
 func _ready() -> void:
@@ -25,6 +26,16 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		return
+
+	if input_disabled:
+		return
+
 	if event is InputEventMouseMotion:
 		var mouse_event: InputEventMouseMotion = event as InputEventMouseMotion
 		var y_modifier: float = -1.0 if invert_y else 1.0
@@ -32,17 +43,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera.rotate_x(-mouse_event.relative.y * MOUSE_SENSITIVITY * y_modifier)
 		camera.rotation.x = clampf(camera.rotation.x, -PI / 2.0, PI / 2.0)
 
-	if event.is_action_pressed("ui_cancel"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
-	_apply_movement()
-	_apply_head_bob(delta)
+	if not input_disabled:
+		_apply_movement()
+		_apply_head_bob(delta)
+	else:
+		velocity.x = 0.0
+		velocity.z = 0.0
 	move_and_slide()
 
 
@@ -75,7 +84,6 @@ func _apply_head_bob(delta: float) -> void:
 
 	var horizontal_velocity: float = Vector2(velocity.x, velocity.z).length()
 	if horizontal_velocity < 0.1 or not is_on_floor():
-		# Smoothly return to base position when not moving
 		camera.position.y = lerpf(camera.position.y, _camera_base_y, 10.0 * delta)
 		return
 
