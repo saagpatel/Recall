@@ -114,6 +114,21 @@ res://
 - [x] Label3D: billboard (FIXED_Y), distance-based opacity fade (3m–8m)
 - [x] Crosshair: dot default, ring on interactable (custom _draw() arc)
 
+**Phase 2: Decay Shaders + Restoration** — COMPLETE
+*Session 4: Visual Decay System*
+- [x] room_decay.gdshader: spatial shader with desaturation, crack overlay, emission dimming
+- [x] object_decay.gdshader: vertex warp, desaturation, dissolve edges, alpha dissolve, pulsing emission
+- [x] crack_overlay.png: procedural crack texture (256x256)
+- [x] DecayManager: full rewrite — timer-based shader/light/fog updates, room/object registration
+- [x] Restoration animation: tween decay→0 over 2.5s + gold GPUParticles3D burst
+- [x] SRSEngine: virtual time offset (get_time(), advance_debug_time()) for T accelerator
+- [x] memory_object.gd: removed StandardMaterial3D, DecayManager applies ShaderMaterial
+- [x] interaction_manager.gd: registers objects with DecayManager, multi-pedestal support
+- [x] player.gd: T debug time toggle, HUD "TIME ACCEL" label
+- [x] test_room.tscn: 4 pedestals (was 1), FogVolume via DecayManager
+- [x] main.tscn: volumetric fog enabled, main.gd registers rooms with DecayManager
+- [x] project.godot: debug_time input action (T)
+
 ## Key Decisions Made
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
@@ -128,6 +143,12 @@ res://
 | Fast travel | Minimap click → 0.5s fade → teleport | No pathfinding cutscene. Instant with brief transition. |
 | Save format | JSON (alternating files for corruption protection) | Human-readable, debuggable, portable. |
 | SRS algorithm | Simplified SM-2 | Battle-tested, simple to implement. Visual decay papers over scheduling imprecision. |
+| Time acceleration | Virtual offset in SRSEngine, not Engine.time_scale | System time unaffected by time_scale. Offset is simpler and controllable. |
+| Room shader on CSG | ShaderMaterial per CSGBox3D surface | CSGBox3D supports material property. Each surface gets own instance sharing decay_amount. |
+| Noise texture | Programmatic NoiseTexture2D (FastNoiseLite) | No external asset needed. Godot generates at runtime. |
+| Object material swap | DecayManager replaces StandardMaterial3D with ShaderMaterial | Centralizes all shader management in one place. |
+| Restoration feedback | Tween + GPUParticles3D burst (gold, 30 particles) | Satisfying visual payoff. Particles auto-cleanup after lifetime. |
+| Pedestal naming | begins_with("Pedestal") check | Supports multiple pedestals per room (Pedestal, Pedestal2, etc.). |
 
 ## Do NOT
 - Do NOT build a room editor or level editor. Templates only.

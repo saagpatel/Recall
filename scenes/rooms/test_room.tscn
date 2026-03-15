@@ -60,3 +60,39 @@ mesh = SubResource("CylinderMesh_pedestal")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pedestal"]
 shape = SubResource("CylinderShape3D_pedestal")
+
+[node name="Pedestal2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.6, -1.5)
+metadata/_edit_group_ = true
+collision_layer = 2
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pedestal2"]
+mesh = SubResource("CylinderMesh_pedestal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pedestal2"]
+shape = SubResource("CylinderShape3D_pedestal")
+
+[node name="Pedestal3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.6, -1.5)
+metadata/_edit_group_ = true
+collision_layer = 2
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pedestal3"]
+mesh = SubResource("CylinderMesh_pedestal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pedestal3"]
+shape = SubResource("CylinderShape3D_pedestal")
+
+[node name="Pedestal4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 1.0)
+metadata/_edit_group_ = true
+collision_layer = 2
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pedestal4"]
+mesh = SubResource("CylinderMesh_pedestal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pedestal4"]
+shape = SubResource("CylinderShape3D_pedestal")

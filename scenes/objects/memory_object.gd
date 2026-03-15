@@ -32,13 +32,7 @@ func setup(id: String, front: String, back: String, cat: String, color: Color) -
 	var mesh: Mesh = _create_mesh(shape_index)
 	mesh_instance.mesh = mesh
 
-	# Material
-	var mat: StandardMaterial3D = StandardMaterial3D.new()
-	mat.albedo_color = color
-	mat.emission_enabled = true
-	mat.emission = color
-	mat.emission_energy_multiplier = 0.3
-	mesh_instance.material_override = mat
+	# Material is applied by DecayManager.register_object() — not set here
 
 	# Label
 	label.text = front

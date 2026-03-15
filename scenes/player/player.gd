@@ -8,6 +8,7 @@ const GRAVITY: float = 9.8
 const HEAD_BOB_AMPLITUDE: float = 0.03
 const HEAD_BOB_WALK_FREQ: float = 2.4
 const HEAD_BOB_SPRINT_FREQ: float = 3.2
+const DEBUG_TIME_RATE: float = 3600.0  # 1 hour per second when T toggled
 
 @export var head_bob_enabled: bool = true
 @export var invert_y: bool = false
@@ -15,10 +16,12 @@ const HEAD_BOB_SPRINT_FREQ: float = 3.2
 @onready var camera: Camera3D = $Camera3D
 @onready var interaction_manager: InteractionManager = $Camera3D/InteractionManager
 @onready var crosshair: Crosshair = $HUD/Crosshair
+@onready var debug_label: Label = $HUD/DebugTimeLabel
 
 var _head_bob_time: float = 0.0
 var _camera_base_y: float = 0.0
 var input_disabled: bool = false
+var _debug_time_active: bool = false
 
 
 func _ready() -> void:
@@ -28,6 +31,10 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("debug_time"):
+		_debug_time_active = !_debug_time_active
+		return
+
 	if input_disabled:
 		return
 
@@ -44,6 +51,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotate_y(-mouse_event.relative.x * MOUSE_SENSITIVITY)
 		camera.rotate_x(-mouse_event.relative.y * MOUSE_SENSITIVITY * y_modifier)
 		camera.rotation.x = clampf(camera.rotation.x, -PI / 2.0, PI / 2.0)
+
+
+func _process(delta: float) -> void:
+	if _debug_time_active:
+		SRSEngine.advance_debug_time(delta * DEBUG_TIME_RATE)
+	debug_label.visible = _debug_time_active
 
 
 func _physics_process(delta: float) -> void:
