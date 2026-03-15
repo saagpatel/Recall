@@ -92,11 +92,11 @@ res://
 
 ## Current Phase
 **Phase 0: Foundation** (target: Week 1)
-- [ ] Project scaffold with folder structure
-- [ ] Player scene: CharacterBody3D, Camera3D, WASD + mouse look, walk/sprint, head bob
-- [ ] Test room: 6m×6m×3m CSGBox3D, OmniLight3D, one pedestal
-- [ ] Autoload stubs: SRSEngine, DecayManager, SaveManager, PalaceManager
-- [ ] RayCast3D + InteractionManager detecting pedestal collision
+- [x] Project scaffold with folder structure
+- [x] Player scene: CharacterBody3D, Camera3D, WASD + mouse look, walk/sprint, head bob
+- [x] Test room: 6m×6m×3m CSGBox3D, OmniLight3D, one pedestal
+- [x] Autoload stubs: SRSEngine, DecayManager, SaveManager, PalaceManager
+- [x] RayCast3D + InteractionManager detecting pedestal collision
 
 ## Key Decisions Made
 | Decision | Choice | Rationale |
