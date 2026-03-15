@@ -18,13 +18,26 @@ const SECONDS_PER_DAY: float = 86400.0
 # Dictionary[String, Dictionary] — keyed by object ID
 var _objects: Dictionary = {}
 
+# Virtual time offset for debug accelerator (F5)
+var _debug_time_offset: float = 0.0
+
 
 func _ready() -> void:
 	print("[SRSEngine] Initialized")
 
 
+## Returns current time with debug offset applied.
+func get_time() -> float:
+	return Time.get_unix_time_from_system() + _debug_time_offset
+
+
+## Advance virtual time by given seconds (for debug accelerator).
+func advance_debug_time(seconds: float) -> void:
+	_debug_time_offset += seconds
+
+
 func create_object(id: String, front: String, back: String, category: String) -> Dictionary:
-	var now: float = Time.get_unix_time_from_system()
+	var now: float = get_time()
 	var data: Dictionary = {
 		"id": id,
 		"front": front,
@@ -48,7 +61,7 @@ func review(id: String, remembered: bool) -> void:
 		return
 
 	var data: Dictionary = _objects[id]
-	var now: float = Time.get_unix_time_from_system()
+	var now: float = get_time()
 	data["last_review_time"] = now
 
 	if remembered:
@@ -80,7 +93,7 @@ func get_decay(id: String) -> float:
 		# Never reviewed — fully due
 		return 1.0
 
-	var now: float = Time.get_unix_time_from_system()
+	var now: float = get_time()
 	var elapsed: float = now - (data["last_review_time"] as float)
 	var interval_seconds: float = interval_days * SECONDS_PER_DAY
 	var progress: float = elapsed / interval_seconds
@@ -89,7 +102,7 @@ func get_decay(id: String) -> float:
 
 func get_due_objects() -> Array[String]:
 	var due: Array[String] = []
-	var now: float = Time.get_unix_time_from_system()
+	var now: float = get_time()
 	for id: String in _objects:
 		var data: Dictionary = _objects[id]
 		if now >= (data["next_review_time"] as float):

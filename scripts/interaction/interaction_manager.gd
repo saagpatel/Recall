@@ -48,7 +48,7 @@ func _physics_process(_delta: float) -> void:
 	if collider is Node and collider != _current_collider:
 		_current_collider = collider as Node
 		looking_at_changed.emit(_current_collider)
-		var is_pedestal: bool = _current_collider is StaticBody3D and _current_collider.name == "Pedestal"
+		var is_pedestal: bool = _current_collider is StaticBody3D and _current_collider.name.begins_with("Pedestal")
 		_update_crosshair(is_pedestal)
 
 
@@ -56,7 +56,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		if _active_panel != null:
 			return
-		if _current_collider != null and _current_collider is StaticBody3D and _current_collider.name == "Pedestal":
+		if _current_collider != null and _current_collider is StaticBody3D and _current_collider.name.begins_with("Pedestal"):
 			var pedestal_path: String = str(_current_collider.get_path())
 			if _pedestal_objects.has(pedestal_path):
 				_open_review_panel(pedestal_path)
@@ -123,6 +123,8 @@ func _on_object_created(pedestal_path: String, id: String, front: String, back: 
 	get_tree().current_scene.add_child(obj)
 	obj.global_position = (pedestal_node as Node3D).global_position + OBJECT_OFFSET
 	obj.setup(id, front, back, category, color)
+
+	DecayManager.register_object(obj)
 
 	_pedestal_objects[pedestal_path] = id
 	_pedestal_nodes[pedestal_path] = obj
