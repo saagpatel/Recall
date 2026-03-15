@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/crosshair.gd" id="1_crosshair"]
+[ext_resource type="Script" path="res://scenes/ui/crosshair_ring.gd" id="2_ring"]
+
+[node name="Crosshair" type="CenterContainer"]
+script = ExtResource("1_crosshair")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dot" type="ColorRect" parent="."]
+layout_mode = 2
+custom_minimum_size = Vector2(4, 4)
+color = Color(1, 1, 1, 0.9)
+mouse_filter = 2
+
+[node name="Ring" type="Control" parent="."]
+layout_mode = 2
+custom_minimum_size = Vector2(24, 24)
+mouse_filter = 2
+script = ExtResource("2_ring")

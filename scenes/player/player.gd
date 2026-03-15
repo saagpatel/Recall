@@ -14,6 +14,7 @@ const HEAD_BOB_SPRINT_FREQ: float = 3.2
 
 @onready var camera: Camera3D = $Camera3D
 @onready var interaction_manager: InteractionManager = $Camera3D/InteractionManager
+@onready var crosshair: Crosshair = $HUD/Crosshair
 
 var _head_bob_time: float = 0.0
 var _camera_base_y: float = 0.0
@@ -23,17 +24,18 @@ var input_disabled: bool = false
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_camera_base_y = camera.position.y
+	interaction_manager.crosshair = crosshair
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if input_disabled:
+		return
+
 	if event.is_action_pressed("ui_cancel"):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		return
-
-	if input_disabled:
 		return
 
 	if event is InputEventMouseMotion:

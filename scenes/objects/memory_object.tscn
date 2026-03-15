@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/objects/memory_object.gd" id="1_memobj"]
+
+[node name="MemoryObject" type="Node3D"]
+script = ExtResource("1_memobj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+pixel_size = 0.005
+font_size = 24
+outline_size = 8
+modulate = Color(1, 1, 1, 1)
+text = ""
+billboard = 2

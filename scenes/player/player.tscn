@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://player001"]
+[gd_scene load_steps=5 format=3 uid="uid://player001"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_player"]
 [ext_resource type="Script" path="res://scripts/interaction/interaction_manager.gd" id="2_interaction"]
+[ext_resource type="PackedScene" path="res://scenes/ui/crosshair.tscn" id="3_crosshair"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_001"]
 radius = 0.3
@@ -27,3 +28,8 @@ script = ExtResource("2_interaction")
 target_position = Vector3(0, 0, -3)
 enabled = true
 collision_mask = 3
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 1
+
+[node name="Crosshair" parent="HUD" instance=ExtResource("3_crosshair")]

@@ -98,7 +98,7 @@ res://
 - [x] Autoload stubs: SRSEngine, DecayManager, SaveManager, PalaceManager
 - [x] RayCast3D + InteractionManager detecting pedestal collision
 
-**Phase 1: First Object + Review** (target: Weeks 2–3)
+**Phase 1: First Object + Review** — COMPLETE
 *Session 2: SRS Engine + SubViewport UI*
 - [x] SRSEngine: SM-2 algorithm with create_object(), review(), get_decay(), get_due_objects()
 - [x] Unit test scene (test/test_srs.tscn): 10 tests covering SM-2 logic — run to verify
@@ -106,13 +106,13 @@ res://
 - [x] CanvasLayer panel prototype: screen-space 512×384 panel, text input works, Esc closes
 - [x] InteractionManager: E-key opens panel at pedestal, Esc closes, player input disabled while panel open
 
-*Session 3: Procedural Objects + Interaction Polish* (NEXT)
-- [ ] memory_object.tscn: procedural mesh + Label3D
-- [ ] creation_panel.tscn: CanvasLayer UI for creating memories
-- [ ] review_panel.tscn: CanvasLayer UI for reviewing (front → reveal → grade)
-- [ ] Full interaction flow: E on empty pedestal → create, E on populated → review
-- [ ] Label3D: billboard, distance-based opacity fade
-- [ ] Crosshair: dot default, ring on interactable
+*Session 3: Procedural Objects + Interaction Polish*
+- [x] memory_object.tscn: procedural mesh (5 shapes) + Label3D with distance-based opacity fade
+- [x] creation_panel.tscn: CanvasLayer UI for creating memories (front/back/category/color)
+- [x] review_panel.tscn: CanvasLayer UI for reviewing (front → reveal → grade, keyboard shortcuts 1/2)
+- [x] Full interaction flow: E on empty pedestal → create, E on populated → review
+- [x] Label3D: billboard (FIXED_Y), distance-based opacity fade (3m–8m)
+- [x] Crosshair: dot default, ring on interactable (custom _draw() arc)
 
 ## Key Decisions Made
 | Decision | Choice | Rationale |
