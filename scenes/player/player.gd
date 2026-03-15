@@ -8,7 +8,7 @@ const GRAVITY: float = 9.8
 const HEAD_BOB_AMPLITUDE: float = 0.03
 const HEAD_BOB_WALK_FREQ: float = 2.4
 const HEAD_BOB_SPRINT_FREQ: float = 3.2
-const DEBUG_TIME_RATE: float = 3600.0  # 1 hour per second when F5 held
+const DEBUG_TIME_RATE: float = 3600.0  # 1 hour per second when F9 toggled
 
 @export var head_bob_enabled: bool = true
 @export var invert_y: bool = false
