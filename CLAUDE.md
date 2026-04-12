@@ -129,6 +129,16 @@ res://
 - [x] main.tscn: volumetric fog enabled, main.gd registers rooms with DecayManager
 - [x] project.godot: debug_time input action (T)
 
+**Phase 3: Multi-Room Palace** — IN PROGRESS
+*Session 5: Palace Manager + Room Templates + Hallways*
+- [x] PalaceManager: grid-based room placement, adjacency validation, hallway generation
+- [x] Room templates: atrium (4 pedestals), study (8), gallery (12), workshop (10), garden (6), vault (16)
+- [x] All rooms: 8×8×3m CSGBox3D shell, doorway gaps on 4 walls, DoorBlocker nodes, NavigationRegion3D
+- [x] hallway.tscn: 2m×3m×6m corridor, collision walls, auto-rotated for N-S vs E-W connections
+- [x] main.gd: PalaceManager-driven room instancing, DecayManager auto-registration
+- [x] Demo layout: atrium(0,0) + study(1,0) + gallery(0,1) + workshop(1,1) with hallway connectors
+- [x] Grid spacing: 14m (8m room + 6m hallway), door blockers removed on connection
+
 ## Key Decisions Made
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
@@ -149,6 +159,11 @@ res://
 | Object material swap | DecayManager replaces StandardMaterial3D with ShaderMaterial | Centralizes all shader management in one place. |
 | Restoration feedback | Tween + GPUParticles3D burst (gold, 30 particles) | Satisfying visual payoff. Particles auto-cleanup after lifetime. |
 | Pedestal naming | begins_with("Pedestal") check | Supports multiple pedestals per room (Pedestal, Pedestal2, etc.). |
+| Room dimensions | All rooms 8m×8m×3m outer shell | Uniform dimensions simplify hallway alignment. Interior varies per template. |
+| Grid spacing | 14m (8m room + 6m hallway) | Rooms centered at grid_pos × 14. Hallway fills the 6m gap exactly. |
+| Door blocker pattern | Named CSGBox3D nodes (DoorBlockerNorth/South/East/West) removed by PalaceManager | Simple, no CSG subtraction. queue_free() on connection. |
+| Hallway orientation | Default along X axis, rotated PI/2 for N-S connections | Single hallway scene serves both orientations. |
+| Room instancing | PalaceManager adds to scene root, DecayManager registered by main.gd | Keeps PalaceManager and DecayManager decoupled. |
 
 ## Do NOT
 - Do NOT build a room editor or level editor. Templates only.
